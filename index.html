@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>IEP Expiration Widget (Compact)</title>
+  <title>IEP Expiration Widget (Mini)</title>
   <style>
     :root {
       --red: #e11d48;
@@ -13,7 +13,7 @@
       --muted: #6b7280;
       --card: #ffffff;
       --ring: rgba(17,24,39,0.06);
-      --shadow: 0 6px 15px var(--ring);
+      --shadow: 0 4px 10px var(--ring);
     }
     * { box-sizing: border-box; }
     body {
@@ -24,55 +24,52 @@
     }
     .widget {
       width: 100%;
-      max-width: 480px; /* more compact */
+      max-width: 360px; /* mini width */
       margin: 0 auto;
-      padding: 10px;
+      padding: 8px;
       background: var(--card);
-      border-radius: 12px;
+      border-radius: 10px;
       box-shadow: var(--shadow);
       border: 1px solid #e5e7eb;
+      font-size: 0.75rem;
     }
-    .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; }
-    .header h2 { font-size: 1rem; margin: 0; font-weight: 700; }
-    .header .date { font-size: 0.8rem; color: var(--muted); }
+    .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; }
+    .header h2 { font-size: 0.9rem; margin: 0; font-weight: 700; }
+    .header .date { font-size: 0.7rem; color: var(--muted); }
 
     .circles {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      display: flex;
+      justify-content: space-around;
       gap: 8px;
-      margin: 8px 0 10px;
+      margin: 6px 0 8px;
     }
-    .circle-card { display:grid; place-items:center; padding:8px 4px; border-radius:12px; border:1px solid #e5e7eb; background:#fff; }
     .ring {
-      width: 100%;
-      max-width: 90px;
-      aspect-ratio: 1/1;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       display: grid; place-items: center;
-      box-shadow: inset 0 0 0 8px #f3f4f6;
+      box-shadow: inset 0 0 0 6px #f3f4f6;
     }
-    .ring .count { font-size: 1.6rem; font-weight: 700; }
-    .ring.red    { box-shadow: inset 0 0 0 8px rgba(225,29,72,0.12); color: var(--red); }
-    .ring.yellow { box-shadow: inset 0 0 0 8px rgba(245,158,11,0.14); color: var(--yellow); }
-    .ring.green  { box-shadow: inset 0 0 0 8px rgba(34,197,94,0.14); color: var(--green); }
+    .ring .count { font-size: 1.2rem; font-weight: 700; }
+    .ring.red    { box-shadow: inset 0 0 0 6px rgba(225,29,72,0.12); color: var(--red); }
+    .ring.yellow { box-shadow: inset 0 0 0 6px rgba(245,158,11,0.14); color: var(--yellow); }
+    .ring.green  { box-shadow: inset 0 0 0 6px rgba(34,197,94,0.14); color: var(--green); }
 
-    .legend { display:flex; gap:6px; align-items:center; margin-top:6px; font-size:0.75rem; color:var(--muted); flex-wrap:wrap; }
-    .chip { width:8px; height:8px; border-radius:50%; display:inline-block; }
+    .legend { display:flex; gap:4px; align-items:center; margin-top:4px; font-size:0.65rem; color:var(--muted); flex-wrap:wrap; justify-content:center; }
+    .chip { width:6px; height:6px; border-radius:50%; display:inline-block; }
     .chip.red{background:var(--red);} .chip.yellow{background:var(--yellow);} .chip.green{background:var(--green);}    
 
-    .list { margin-top: 4px; border-top:1px solid #e5e7eb; padding-top:4px; }
-    .list h3 { margin:0 0 4px; font-size:0.85rem; }
-    .rows { display:grid; gap:6px; }
-    .row { display:grid; grid-template-columns:1fr auto auto; gap:8px; align-items:center; padding:6px 8px; border:1px solid #e5e7eb; border-radius:8px; background:#fff; font-size:0.8rem; }
+    .list { margin-top: 3px; border-top:1px solid #e5e7eb; padding-top:3px; }
+    .list h3 { margin:0 0 3px; font-size:0.8rem; }
+    .rows { display:grid; gap:4px; }
+    .row { display:grid; grid-template-columns:1fr auto auto; gap:6px; align-items:center; padding:4px 6px; border:1px solid #e5e7eb; border-radius:6px; background:#fff; font-size:0.7rem; }
     .name { font-weight:600; }
-    .date { font-variant-numeric: tabular-nums; color: var(--muted); font-size:0.75rem; }
-    .days { font-variant-numeric: tabular-nums; font-weight:600; font-size:0.75rem; }
-    .pill { padding:1px 6px; border-radius:999px; font-size:0.7rem; border:1px solid #e5e7eb; }
+    .date { font-variant-numeric: tabular-nums; color: var(--muted); font-size:0.65rem; }
+    .days { font-variant-numeric: tabular-nums; font-weight:600; font-size:0.65rem; }
+    .pill { padding:0 4px; border-radius:999px; font-size:0.65rem; border:1px solid #e5e7eb; }
     .pill.red{ background:rgba(225,29,72,0.08); color:#991b1b; border-color:rgba(225,29,72,0.25);} 
     .pill.yellow{ background:rgba(245,158,11,0.10); color:#92400e; border-color:rgba(245,158,11,0.25);} 
     .pill.green{ background:rgba(34,197,94,0.10); color:#065f46; border-color:rgba(34,197,94,0.25);} 
-
-    @media (max-width:480px){ .ring{ max-width:70px; } .ring .count{ font-size:1.4rem; } }
   </style>
   <script>
     (function(){
@@ -83,26 +80,18 @@
           0
         );
         if (window.parent && window.parent !== window) {
-          try { window.parent.postMessage({ type: 'IEP_WIDGET_HEIGHT', height: Math.max(300, h) }, '*'); } catch(e){}
+          try { window.parent.postMessage({ type: 'IEP_WIDGET_HEIGHT', height: Math.max(200, h) }, '*'); } catch(e){}
         }
       }
 
       function init(){
         var target = document.getElementById('iep-widget') || document.body;
-        if (!target || !(target instanceof Element)) {
-          return setTimeout(init, 16);
-        }
+        if (!target || !(target instanceof Element)) { return setTimeout(init, 16); }
         if ('ResizeObserver' in window) {
-          try {
-            var ro = new ResizeObserver(function(){ postHeight(); });
-            ro.observe(target);
-          } catch(e){}
+          try { var ro = new ResizeObserver(function(){ postHeight(); }); ro.observe(target); } catch(e){}
         }
         if ('MutationObserver' in window) {
-          try {
-            var mo = new MutationObserver(function(){ postHeight(); });
-            mo.observe(target, { subtree:true, childList:true, attributes:true, characterData:true });
-          } catch(e){}
+          try { var mo = new MutationObserver(function(){ postHeight(); }); mo.observe(target, { subtree:true, childList:true, attributes:true, characterData:true }); } catch(e){}
         }
         window.addEventListener('load', postHeight);
         window.addEventListener('resize', postHeight);
@@ -120,27 +109,23 @@
     </div>
 
     <div class="circles">
-      <div class="circle-card"><div class="ring red"><div class="count">1</div></div></div>
-      <div class="circle-card"><div class="ring yellow"><div class="count">2</div></div></div>
-      <div class="circle-card"><div class="ring green"><div class="count">27</div></div></div>
+      <div class="ring red"><div class="count">1</div></div>
+      <div class="ring yellow"><div class="count">2</div></div>
+      <div class="ring green"><div class="count">27</div></div>
     </div>
 
     <div class="legend">
       <span class="chip red"></span> Red (≤30)
-      <span style="width:6px"></span>
       <span class="chip yellow"></span> Yellow (31–60)
-      <span style="width:6px"></span>
       <span class="chip green"></span> Green (61+)
     </div>
 
     <div class="list">
-      <h3>Next 5 IEPs Due</h3>
+      <h3>Next 3 IEPs Due</h3>
       <div class="rows">
-        <div class="row"><div class="name">A. Mik</div><div class="date">2025-09-03</div><div class="days"><span class="pill red">18 days</span></div></div>
-        <div class="row"><div class="name">J. Hen</div><div class="date">2025-10-14</div><div class="days"><span class="pill yellow">59 days</span></div></div>
-        <div class="row"><div class="name">D. Haw</div><div class="date">2025-10-14</div><div class="days"><span class="pill yellow">59 days</span></div></div>
-        <div class="row"><div class="name">T. Bal</div><div class="date">2025-10-17</div><div class="days"><span class="pill green">62 days</span></div></div>
-        <div class="row"><div class="name">J. Bri</div><div class="date">2025-10-17</div><div class="days"><span class="pill green">62 days</span></div></div>
+        <div class="row"><div class="name">A. Mik</div><div class="date">2025-09-03</div><div class="days"><span class="pill red">18d</span></div></div>
+        <div class="row"><div class="name">J. Hen</div><div class="date">2025-10-14</div><div class="days"><span class="pill yellow">59d</span></div></div>
+        <div class="row"><div class="name">D. Haw</div><div class="date">2025-10-14</div><div class="days"><span class="pill yellow">59d</span></div></div>
       </div>
     </div>
   </div>
